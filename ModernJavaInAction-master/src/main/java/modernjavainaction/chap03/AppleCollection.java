@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,7 @@ public class AppleCollection {
     public static void main(String... args) {
         AppleCollection appleCollection = new AppleCollection();
         appleCollection.predicateOnAMap();
+        appleCollection.consumerInterface();
     }
 
     public AppleCollection() {
@@ -97,6 +99,24 @@ public class AppleCollection {
 
         Map somemap = filterMapWithApple(appleCollection.appleHashMap, filterForWeight, filterForName);
         somemap.size();
+    }
+
+    public void consumerInterface() {
+
+        AppleCollection appleCollection = new AppleCollection();
+        appleCollection.appleHashMap.put("McIntosh1", new Apple(85, Color.RED));
+        appleCollection.appleHashMap.put("McIntosh2", new Apple(85, Color.RED));
+        appleCollection.appleHashMap.put("McIntosh3", new Apple(120, Color.RED));
+        appleCollection.appleHashMap.put("McIntosh4", new Apple(140, Color.RED));
+        appleCollection.appleHashMap.put("M2Intosh5", new Apple(185, Color.RED));
+        appleCollection.appleHashMap.put("M3Intosh7", new Apple(285, Color.RED));
+
+        Consumer<Apple> consumer = apple -> {System.out.println("Weight of apple is: " + apple.getWeight());};
+
+        appleCollection.appleHashMap.keySet().stream().forEach(key ->{
+            consumer.accept(appleCollection.appleHashMap.get((key)));});
+
+
     }
 
 
