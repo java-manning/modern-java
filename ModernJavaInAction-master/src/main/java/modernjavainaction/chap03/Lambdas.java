@@ -1,9 +1,8 @@
 package modernjavainaction.chap03;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Lambdas {
 
@@ -28,6 +27,11 @@ public class Lambdas {
     // [Apple{color=GREEN, weight=80}, Apple{color=RED, weight=120}, Apple{color=GREEN, weight=155}]
     inventory.sort(c);
     System.out.println(inventory);
+
+    Lambdas nn = new Lambdas();
+    List<String> ss = nn.weirdLambdaNames();
+    ss.add("sdf");
+
   }
 
   public static List<Apple> filter(List<Apple> inventory, ApplePredicate p) {
@@ -45,5 +49,30 @@ public class Lambdas {
     boolean test(Apple a);
 
   }
+
+  public <T> List<T> filter(List<T> list, Predicate<T> p) {
+    List<T> results = new ArrayList<>();
+    for(T t: list) {
+      if(p.test(t)) {
+        results.add(t);
+      } }
+    return results;
+  }
+
+  public List<String> weirdLambdaNames() {
+
+    Predicate<String> nonEmptyStringPredicate = (String s) -> (s.startsWith("E"));
+
+    List<String> listOfStrings = new ArrayList<String>();
+    listOfStrings.add("Erdem");
+    listOfStrings.add("YILMAZ");
+    listOfStrings.add("TEST");
+
+    List<String> nonEmpty = filter(listOfStrings, nonEmptyStringPredicate);
+    return nonEmpty;
+
+  }
+
+
 
 }
