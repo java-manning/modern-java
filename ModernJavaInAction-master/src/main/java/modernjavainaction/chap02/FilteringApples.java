@@ -1,16 +1,25 @@
 package modernjavainaction.chap02;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import modernjavainaction.chap20.Student;
+
+import java.util.*;
 
 public class FilteringApples {
 
   public static void main(String... args) {
     List<Apple> inventory = Arrays.asList(
+
         new Apple(80, Color.GREEN),
+            new Apple(80, Color.RED),
+            new Apple(80, Color.RED),
+        new Apple(3180, Color.GREEN),
+        new Apple(2280, Color.GREEN),
+        new Apple(810, Color.GREEN),
+        new Apple(8120, Color.GREEN),
         new Apple(155, Color.GREEN),
-        new Apple(120, Color.RED));
+        new Apple(120, Color.RED)
+
+    );
 
     // [Apple{color=GREEN, weight=80}, Apple{color=GREEN, weight=155}]
     List<Apple> greenApples = filterApplesByColor(inventory, Color.GREEN);
@@ -40,6 +49,14 @@ public class FilteringApples {
       }
     });
     System.out.println(redApples2);
+
+    //fixme EY adding manual sort
+    Collections.sort(inventory,new Apple.AppleSortingComparator());
+    System.out.println("\n\nAfter Sorting:\n");
+    for (Apple a : inventory) {
+      System.out.println(a);
+    }
+
   }
 
   public static List<Apple> filterGreenApples(List<Apple> inventory) {
@@ -117,6 +134,16 @@ public class FilteringApples {
     @Override
     public String toString() {
       return String.format("Apple{color=%s, weight=%d}", color, weight);
+    }
+
+    static class AppleSortingComparator implements Comparator<Apple> {
+      @Override
+      public int compare(Apple a1, Apple a2) {
+        if ( a1.getWeight() - a2.getWeight() > 0 ) { return 1; }
+        if ( a1.getWeight() - a2.getWeight() < 0 ) { return -1; }
+        if ( a1.getColor().equals(Color.RED) ) { return 1; }
+        return -1;
+      }
     }
 
   }
