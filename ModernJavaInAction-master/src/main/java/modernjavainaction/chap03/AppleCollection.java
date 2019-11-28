@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -116,6 +117,58 @@ public class AppleCollection {
         appleCollection.appleHashMap.keySet().stream().forEach(key ->{
             consumer.accept(appleCollection.appleHashMap.get((key)));});
 
+    }
+
+    public <A, R> List<R> createNameListOfApples(List<A> list, Function<A, R> f) {
+        List<R> result = new ArrayList<>();
+        for(A t: list) {
+            result.add(f.apply(t));
+        }
+        return result;
+    }
+
+    public static String convertToUppercase(String s) {
+        return s.toUpperCase();
+    }
+
+    public boolean checkLength(String s) {
+        return (s.length()!=8);
+    }
+
+    public void functionInterface() {
+
+        //todo: how does this work??
+        AppleCollection appleCollection = new AppleCollection();
+        appleCollection.add(new Apple(100, Color.GREEN));
+        appleCollection.add(new Apple(120, Color.GREEN));
+        appleCollection.add(new Apple(200, Color.RED));
+        appleCollection.add(new Apple(83, Color.GREEN));
+        appleCollection.add(new Apple(84, Color.GREEN));
+        appleCollection.add(new Apple(85, Color.RED));
+
+        Predicate<String> filterForName = (String a) -> a.startsWith("McIntosh");
+
+        Function<Apple, String> appleStringFunction = apple -> {return String.valueOf(apple.getWeight());};
+
+        //List<String> s = appleCollection.getList().stream().forEach( apple -> appleStringFunction.apply(apple));
+
+        Function<Integer, Integer> f = x -> x + 1;
+        int results = f.apply(3);
+
+        Function<Integer, Integer> f2 = x -> f.apply(x)^2;
+        results = f2.apply(3);
+
+        Function<Apple, Integer> doubleWeightOfApple = apple -> apple.getWeight()*2;
+        Function<List<String>, List<String>> listconverter = list1 -> list1.stream().filter(s -> s.startsWith("person")).collect(Collectors.toList());
+    }
+
+    public void functionalInterface2() {
+
+        List<String> myList = new ArrayList<String>();
+
+        myList.add("Erdem");
+        myList.add("Yilmaz");
+        myList.add("Yilmaz");
 
     }
 
